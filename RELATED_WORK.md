@@ -17,7 +17,7 @@ The following 2026 individual Internet-Drafts are particularly relevant:
    Binds per-action authorization references and memory-provenance references into an agent action capsule; explicitly includes a defensive-publication notice.
 
 4. **The Action Evidence Boundary for Consequential Agent Effects**  
-   `draft-schrock-action-evidence-boundary` — first revision `-00` published 21 July 2026; current Datatracker revision observed during this package review: `-03`, dated 3 August 2026.  
+   `draft-schrock-action-evidence-boundary` — first revision `-00` published 21 July 2026; current Datatracker revision observed: `-04`, dated 16 August 2026.  
    Executor-side processing model for joining authorization/evidence to exact effects, local authorization, durable consumption/reservation, dispatch lifecycle, effect outcomes, and reconciliation.  
    - https://datatracker.ietf.org/doc/draft-schrock-action-evidence-boundary/
 
