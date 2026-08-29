@@ -1,5 +1,5 @@
 {
-  "file_count": 56,
+  "file_count": 60,
   "files": [
     {
       "bytes": 19,
@@ -7,9 +7,19 @@
       "sha256": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c"
     },
     {
-      "bytes": 749,
+      "bytes": 1118,
+      "path": ".github/ISSUE_TEMPLATE/counterexample.md",
+      "sha256": "3966f0344b8a061f066eb9560f48e1ec72fbce6c7c13f23c9e8bfc0029279441"
+    },
+    {
+      "bytes": 1898,
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "sha256": "1e7fd515f9502712226db78f9ef872347ce9bc1bf1c72cb62dc8bf1cb4fe1be9"
+    },
+    {
+      "bytes": 950,
       "path": ".github/workflows/verify.yml",
-      "sha256": "59610c79679fa841d89d9f042808f200e2c4dc8a4423654b031d9af8a34cbdcc"
+      "sha256": "498b5b1797e3730674cdc199a774f2054e75459ab140a49502a2ba36822b3298"
     },
     {
       "bytes": 58,
@@ -170,6 +180,16 @@
       "bytes": 3486,
       "path": "aecp/world.py",
       "sha256": "7881e02bcc15eca3bc5078bb60946109bfcf48a681c5f5a563052e3a3764626b"
+    },
+    {
+      "bytes": 1707,
+      "path": "docs/interop/README.md",
+      "sha256": "d5f36dd20f0c4fc98e05971136293894279160b6b4228fa590264fe1ab0c8393"
+    },
+    {
+      "bytes": 2755,
+      "path": "docs/interop/aeb-04.md",
+      "sha256": "1b8dd5dbe9505345f821c0c42e928f97b6f27d674b45153662a562cef9d570cd"
     },
     {
       "bytes": 65147,
