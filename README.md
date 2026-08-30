@@ -107,7 +107,15 @@ python3 -B verify.py run \
   --adapter-command ./your-adapter --your-argument
 ```
 
-Adapters receive the only handle to the synthetic effect world. They may request local emissions through that port, but they do not report surface observations. The harness observes the world independently afterward. See `ADAPTER_CONTRACT.md`.
+Adapters receive the only handle to the synthetic effect world. They route the effects the
+candidate attempts through that port, but they do not report surface observations. The
+harness observes the world independently afterward.
+
+Wrapping an external control has one failure mode worth knowing before you start: an
+adapter that emits because the decision said `ALLOW` restates the decision instead of
+observing the effect path, and passes while measuring nothing. A runnable example and a
+way to check your own wiring are in [`examples/`](examples/README.md); the rule itself is
+in [`ADAPTER_CONTRACT.md`](ADAPTER_CONTRACT.md).
 
 ## Scenario classes
 

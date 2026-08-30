@@ -3,10 +3,12 @@ from __future__ import annotations
 import copy
 import inspect
 import json
+import os
 import subprocess
 import sys
 import tempfile
 import unittest
+import unittest.mock
 from pathlib import Path
 
 from aecp.adapters import (
@@ -250,6 +252,35 @@ class HarnessTests(unittest.TestCase):
         first_case = manifest["content"]["scenarios"][0]["cases"][0]
         self.assertEqual("FORMED", first_case["observation"])
         self.assertEqual("subprocess:test-fixture", manifest["content"]["implementation"]["id"])
+
+    def test_documented_example_adapter_passes_as_shipped(self):
+        """The copyable example in examples/ must keep working, or the docs lie."""
+        script = ROOT / "examples" / "subprocess_adapter.py"
+        factory = lambda: SubprocessAdapter([sys.executable, str(script)], label="example-subprocess")
+        env = {k: v for k, v in os.environ.items() if k != "AECP_EXAMPLE_FAULT"}
+        with unittest.mock.patch.dict(os.environ, env, clear=True):
+            manifest = self.run_adapter(factory)
+        self.assertEqual("PASS", manifest["content"]["overall"])
+
+    def test_documented_example_wiring_check_is_sensitive(self):
+        """The fault switch must actually reach the effect port.
+
+        This is the property the example teaches integrators to verify. If a
+        deliberate leak inside the candidate's actuation path stops producing
+        DENIED_BUT_FORMED, the example no longer demonstrates a non-circular
+        wiring and the instructions in examples/README.md are wrong.
+        """
+        script = ROOT / "examples" / "subprocess_adapter.py"
+        factory = lambda: SubprocessAdapter([sys.executable, str(script)], label="example-fault")
+        with unittest.mock.patch.dict(os.environ, {"AECP_EXAMPLE_FAULT": "leak-after-deny"}):
+            manifest = self.run_adapter(factory)
+        self.assertEqual("FAIL", manifest["content"]["overall"])
+        divergences = {
+            case["divergence"]
+            for scenario in manifest["content"]["scenarios"]
+            for case in scenario["cases"]
+        }
+        self.assertIn("DENIED_BUT_FORMED", divergences)
 
     def test_subprocess_validates_complete_response_before_emitting(self):
         payload = json.dumps({

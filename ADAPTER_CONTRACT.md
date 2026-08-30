@@ -2,7 +2,9 @@
 
 ## Purpose
 
-An adapter connects a candidate control to the AECP synthetic world. The adapter decides whether to request the declared local emissions. It does not report whether surfaces changed; the harness observes that independently.
+An adapter connects a candidate control to the AECP synthetic world. It reports the candidate's decision and routes every synthetic effect the exercised candidate path attempts through the effect port. It MUST NOT create, suppress, or infer emissions from the decision it is about to return. It does not report whether surfaces changed; the harness observes that independently.
+
+If you are wrapping an external control rather than writing a self-contained example, read [Wrapping an external control](#wrapping-an-external-control) before anything else. The most common integration mistake produces a result that looks like a pass and measures nothing.
 
 ## Python contract
 
@@ -84,6 +86,56 @@ python3 -B verify.py run \
 Place `--adapter-command` last; the remaining tokens are passed as the command argv without platform-specific shell splitting. The label must be 1–128 ASCII letters, digits, dots, underscores, or hyphens and must start with a letter or digit. The label, not the command or its absolute path, is hashed into the manifest.
 
 The child MUST exit `0`. Its response may contain only `decision`, optional non-empty `reason`, and optional `emissions`. The parent validates the complete response before applying any emission, then performs the independent snapshot diff. Diagnostic logs belong on standard error and are not part of the manifest. The subprocess is untrusted executable code and is not sandboxed by AECP.
+
+## Wrapping an external control
+
+The bundled adapters are self-contained illustrations: the control and the synthetic
+actuation are the same code, so `if allowed: emit` is correct there. It is not a template
+for wrapping something external.
+
+A wrapper that derives emissions from the decision looks like this:
+
+```python
+decision = candidate.authorize(request)
+if decision == "ALLOW":
+    emit_declared_effect()      # wrong: the emission is the decision, restated
+```
+
+That wrapper still exercises qualification — a candidate that wrongly allows a negative
+case, or wrongly denies the positive control, is still caught. What it can never produce
+is either off-diagonal observation: a denial that formed an effect, or an allowance that
+formed nothing. Those two are the reason AECP exists. A pass from such a wrapper says the
+decisions were right; it does not say the effect path was controlled, and it must not be
+reported as though it did.
+
+Route the candidate's own actuation attempts instead:
+
+```python
+attempted = []
+decision = candidate.run(request, on_effect=attempted.append)
+for entry in attempted:
+    port.emit(entry["surface"], entry["key"], entry["value"])
+return {"decision": decision, "reason": reason}
+```
+
+`on_effect` stands for whatever hook, callback, or interceptor your control already uses
+at the moment it is about to act. If your control cannot surface an attempted effect
+independently of its decision, AECP cannot evaluate effect-path non-formation for that
+integration. Report that rather than a pass.
+
+### Checking your own wiring
+
+A correct wiring and a circular one both pass. The difference only shows when the
+candidate misbehaves, so make it misbehave on purpose: inject an effect attempt into the
+candidate's actuation path on a request it denied. A correctly wired integration reports
+`DENIED_BUT_FORMED` and exits non-zero. A circular wrapper still passes, because it
+suppressed the emission itself.
+
+If you cannot make the run fail this way, the integration is not connected to the effect
+path and the passing result does not mean what it appears to mean.
+
+`examples/subprocess_adapter.py` is a runnable version of both halves; see
+[`examples/README.md`](examples/README.md).
 
 ## Failure semantics
 

@@ -1,5 +1,5 @@
 {
-  "file_count": 60,
+  "file_count": 62,
   "files": [
     {
       "bytes": 19,
@@ -27,9 +27,9 @@
       "sha256": "76abcf7fe8cb0ac28182781eb7399c1f958539ba2a806262556c0c8dd8f0d4bf"
     },
     {
-      "bytes": 3439,
+      "bytes": 6085,
       "path": "ADAPTER_CONTRACT.md",
-      "sha256": "d1c4d1e2c55e32158df2dd2df6670cb07445bb5f1c79ad75c09150cfdc7e3425"
+      "sha256": "063fff69ca3f8d55dc7aefdcd5e96e553a83f4b65c3443c41ecdaa86bce7d1f7"
     },
     {
       "bytes": 978,
@@ -97,9 +97,9 @@
       "sha256": "dca1ca2b07e8a5496463e7fbd92368ca53edb17f7093dab1c3ef6e7105bdc8f0"
     },
     {
-      "bytes": 8760,
+      "bytes": 9145,
       "path": "README.md",
-      "sha256": "8f89f523c32fec51d34cc386bb0cbb9cad90a0a18f347a3b2db7a1a94c26192e"
+      "sha256": "5ff15a1f92c7594420daa8f33c8e48493ba1e0f09baf1efce189acebade5f919"
     },
     {
       "bytes": 2221,
@@ -147,9 +147,9 @@
       "sha256": "a966bdec9ebca78184a0b8dd39cef6c04d31ccf2537466386e9136b1622f537e"
     },
     {
-      "bytes": 9098,
+      "bytes": 9515,
       "path": "aecp/adapters.py",
-      "sha256": "ea645a2550e5ad455a0dce174f334e37ea5803cfd1c0859cff23361d71c5e3e2"
+      "sha256": "0458cab82cff3a646b8e5f6b91fe425ea92676d1b9186f6659e4a66e3040cb02"
     },
     {
       "bytes": 1953,
@@ -190,6 +190,16 @@
       "bytes": 17932,
       "path": "docs/interop/aeb-04.md",
       "sha256": "0b29566bc95a139817e863f53f4ee51f45291a9913308e5ab083e503aaa22faa"
+    },
+    {
+      "bytes": 3682,
+      "path": "examples/README.md",
+      "sha256": "a6827628d9a8b0a85b72c80c666c909800ffa4fe5af15cd66fbc20a6083cb86c"
+    },
+    {
+      "bytes": 5270,
+      "path": "examples/subprocess_adapter.py",
+      "sha256": "c96d93409b4f2cd2fb7cbfe7fc16d2d5b1738b1baa0673645724cf11400891b6"
     },
     {
       "bytes": 65147,
@@ -277,9 +287,9 @@
       "sha256": "582b9531e0a0c7b6814e85686ef48a1144f050e54e69c7a6c538f91e7f55a831"
     },
     {
-      "bytes": 15972,
+      "bytes": 17616,
       "path": "tests/test_harness.py",
-      "sha256": "e96b5c4c398ab74137049d8f378265594028ed208c248e8ec23e3e8e89b92c46"
+      "sha256": "06acd7ac366a15c147c1b8b497071707b12eb5f1e2e9d304d558b9fa19272782"
     },
     {
       "bytes": 1884,

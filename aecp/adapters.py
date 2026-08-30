@@ -44,6 +44,15 @@ class _Builtin:
 
 
 class ProtectedAdapter(_Builtin):
+    """A self-contained illustrative control.
+
+    Qualification and synthetic actuation are implemented together here, so
+    `if allowed: emit` is correct. It is not a template for wrapping an
+    external control: a wrapper built this way derives the emission from the
+    decision and can never observe a denial that still formed an effect. See
+    "Wrapping an external control" in ADAPTER_CONTRACT.md.
+    """
+
     def __init__(self) -> None:
         super().__init__("illustrative-protected", "Exact-binding example control")
 
