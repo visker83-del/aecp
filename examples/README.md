@@ -10,9 +10,7 @@ only because the repository already is.
 ## 1. Run it as shipped
 
 ```bash
-python3 -B verify.py run \
-  --adapter-label example-subprocess \
-  --adapter-command python3 examples/subprocess_adapter.py
+python3 -B verify.py run --adapter-label example-subprocess --adapter-command python3 examples/subprocess_adapter.py
 ```
 
 Seven scenario classes, `PASS`, exit `0`.
@@ -21,24 +19,36 @@ Seven scenario classes, `PASS`, exit `0`.
 
 This is the step that matters, and it is the one that is easy to skip.
 
-A correct integration and a broken one both pass the run above. The difference only shows
-when the control misbehaves. So make it misbehave:
+A correctly wired integration and a circularly wired one both pass the run above while the
+control behaves correctly. The difference only shows when the control misbehaves. So make
+it misbehave, twice, in opposite directions:
 
 ```bash
-AECP_EXAMPLE_FAULT=leak-after-deny python3 -B verify.py run \
-  --adapter-label example-subprocess-fault \
-  --adapter-command python3 examples/subprocess_adapter.py
+AECP_EXAMPLE_FAULT=leak-after-deny python3 -B verify.py run --adapter-label example-fault-leak --adapter-command python3 examples/subprocess_adapter.py
 ```
 
-Expected: `FAIL`, non-zero exit, and `divergence=DENIED_BUT_FORMED` on the negative cases.
+```bash
+AECP_EXAMPLE_FAULT=drop-after-allow python3 -B verify.py run --adapter-label example-fault-drop --adapter-command python3 examples/subprocess_adapter.py
+```
 
-The fault is injected inside the candidate's actuation path, not in the adapter. That is
-deliberate. Putting the fault in the adapter would only prove the adapter reaches the
+Expected: `FAIL` and a non-zero exit from both — `divergence=DENIED_BUT_FORMED` on the
+negative cases in the first, `ALLOWED_BUT_NOT_FORMED` on the positive controls in the
+second.
+
+They catch different mistakes:
+
+| Fault | Catches |
+|---|---|
+| `leak-after-deny` | an adapter that suppresses emissions whenever the decision is `DENY` |
+| `drop-after-allow` | an adapter that produces emissions on the allow path regardless of what the control did |
+
+Both faults are injected inside the candidate's actuation path, not in the adapter. That
+is deliberate. Putting a fault in the adapter would only prove the adapter reaches the
 effect port; it would not prove the adapter reaches your control.
 
-**If you cannot make your own integration fail this way, it is not connected to the effect
-path.** The passing result then tells you the decisions were right. It does not tell you
-the effect stayed absent, which is the question this profile exists to ask.
+**If you cannot make your own integration fail both ways, it is not connected to the
+effect path.** The passing result then tells you the decisions were right. It does not
+tell you the effect stayed absent, which is the question this profile exists to ask.
 
 ## 3. Swap in your control
 
@@ -76,9 +86,13 @@ list and no certification.
 
 Include the AECP source revision, your adapter label and control version, the exact
 command, the result manifest and its `content_sha256`, the field-mapping assumptions from
-step 4, and the wiring check from step 2 reported separately from the conformance run —
-the wiring check is a deliberately induced failure that proves the instrument is
-connected, not a finding about your product.
+step 4, and both wiring checks from step 2 reported separately from the conformance run —
+the wiring checks are deliberately induced failures that prove the instrument is
+connected, not findings about your product.
+
+`REPRODUCIBILITY.md` treats a result without those wiring checks as exercising
+qualification only. It is not an `R2-adapter` result, because nothing established that the
+effect path was observed rather than restated.
 
 State plainly what the result does not establish: production paths outside the synthetic
 effect port, complete mediation, and any effect that formed and was rolled back between

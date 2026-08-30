@@ -21,7 +21,8 @@ def describe() -> dict:
     }
 
 def handle(request: dict, port) -> dict:
-    # Optionally request local synthetic writes:
+    # Forward only the effects the candidate's actuation path attempted.
+    # Never derive this from the decision you are about to return.
     port.emit("surface-id", "key", {"synthetic": "value"})
     return {"decision": "ALLOW", "reason": "free-text reason"}
 ```
@@ -125,13 +126,20 @@ integration. Report that rather than a pass.
 
 ### Checking your own wiring
 
-A correct wiring and a circular one both pass. The difference only shows when the
-candidate misbehaves, so make it misbehave on purpose: inject an effect attempt into the
-candidate's actuation path on a request it denied. A correctly wired integration reports
-`DENIED_BUT_FORMED` and exits non-zero. A circular wrapper still passes, because it
-suppressed the emission itself.
+A correctly wired and a circularly wired integration can both pass while the candidate
+behaves correctly. The difference only shows when the candidate misbehaves, so make it
+misbehave on purpose, inside the candidate's actuation path rather than in the adapter.
+Two faults, catching two different miswirings:
 
-If you cannot make the run fail this way, the integration is not connected to the effect
+| Injected fault | Expected | Catches |
+|---|---|---|
+| act on a request the candidate denied | `DENIED_BUT_FORMED` | an adapter that suppresses emissions when the decision is `DENY` |
+| act on nothing after the candidate allowed | `ALLOWED_BUT_NOT_FORMED` | an adapter that fabricates emissions on the allow path |
+
+A circular wrapper passes both, because it never let the candidate's behaviour reach the
+port in the first place.
+
+If you cannot make the run fail either way, the integration is not connected to the effect
 path and the passing result does not mean what it appears to mean.
 
 `examples/subprocess_adapter.py` is a runnable version of both halves; see

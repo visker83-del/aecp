@@ -14,6 +14,11 @@ Originally created by **Certum Systems**.
 
 Recent government and frontier-lab disclosures describe live-internet effects, multi-hop compromise across evaluation and production environments, external artifact or credential reuse, and long campaigns reconstructed across short-lived runs. AECP begins with a small AISI-derived profile and is designed to accept additional incident-shaped fixtures without prescribing a vendor implementation. These later disclosures are context, not new normative v0.1 scenario classes; source status is tracked in `SOURCES.md`.
 
+[`INCIDENT_MAPPING.md`](INCIDENT_MAPPING.md) sets out which class came from which report, and
+separates the public 2026 material into what was observed, what was a deliberately constructed
+scenario, and what was a forward-looking capability assessment. That separation has to be made
+before any of it can be cited.
+
 ## Quick start
 
 Requirements: Python 3.11 or later. No third-party Python packages are required.

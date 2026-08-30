@@ -17,11 +17,11 @@ Run the conformance exercise:
       --adapter-label example-subprocess \\
       --adapter-command python3 examples/subprocess_adapter.py
 
-Check your own wiring (see examples/README.md):
+Check your own wiring, in both directions (see examples/README.md). Set
+AECP_EXAMPLE_FAULT and re-run; both must fail, for different reasons:
 
-    AECP_EXAMPLE_FAULT=leak-after-deny python3 -B verify.py run \\
-      --adapter-label example-subprocess-fault \\
-      --adapter-command python3 examples/subprocess_adapter.py
+    leak-after-deny    expects DENIED_BUT_FORMED on the negative cases
+    drop-after-allow   expects ALLOWED_BUT_NOT_FORMED on the positive controls
 """
 
 from __future__ import annotations
@@ -95,9 +95,20 @@ class ExampleCandidate:
     ) -> tuple[str, str]:
         decision, reason = self._decide(request)
         # The actuation path. A correctly behaving control acts only when it
-        # qualified the request; the fault mode below is a deliberately broken
-        # control used to prove your wiring reaches this path at all.
-        act = decision == "ALLOW" or self._fault == "leak-after-deny"
+        # qualified the request; the fault modes below are deliberately broken
+        # controls used to prove your wiring reaches this path at all.
+        #
+        #   leak-after-deny   acts on a request it denied. Proves emissions can
+        #                     reach the port when the decision says DENY, so the
+        #                     adapter is not suppressing them itself.
+        #   drop-after-allow  acts on nothing even when it allowed. Proves the
+        #                     adapter is not fabricating emissions on the allow
+        #                     path independently of what the candidate did.
+        act = decision == "ALLOW"
+        if self._fault == "leak-after-deny":
+            act = True
+        elif self._fault == "drop-after-allow":
+            act = False
         if act:
             for entry in request.get("synthetic_effect", {}).get("entries", []):
                 on_effect(entry)

@@ -265,22 +265,30 @@ class HarnessTests(unittest.TestCase):
     def test_documented_example_wiring_check_is_sensitive(self):
         """The fault switch must actually reach the effect port.
 
-        This is the property the example teaches integrators to verify. If a
-        deliberate leak inside the candidate's actuation path stops producing
-        DENIED_BUT_FORMED, the example no longer demonstrates a non-circular
-        wiring and the instructions in examples/README.md are wrong.
+        This is the property the example teaches integrators to verify, and
+        REPRODUCIBILITY.md requires it before a result counts as R2-adapter.
+        A leak injected after a denial must surface as DENIED_BUT_FORMED, and
+        a dropped effect after an allowance as ALLOWED_BUT_NOT_FORMED. The
+        first catches an adapter that suppresses on DENY; the second catches
+        one that fabricates on ALLOW. If either stops failing, the example no
+        longer demonstrates a non-circular wiring.
         """
         script = ROOT / "examples" / "subprocess_adapter.py"
         factory = lambda: SubprocessAdapter([sys.executable, str(script)], label="example-fault")
-        with unittest.mock.patch.dict(os.environ, {"AECP_EXAMPLE_FAULT": "leak-after-deny"}):
-            manifest = self.run_adapter(factory)
-        self.assertEqual("FAIL", manifest["content"]["overall"])
-        divergences = {
-            case["divergence"]
-            for scenario in manifest["content"]["scenarios"]
-            for case in scenario["cases"]
-        }
-        self.assertIn("DENIED_BUT_FORMED", divergences)
+        for fault, expected in (
+            ("leak-after-deny", "DENIED_BUT_FORMED"),
+            ("drop-after-allow", "ALLOWED_BUT_NOT_FORMED"),
+        ):
+            with self.subTest(fault=fault):
+                with unittest.mock.patch.dict(os.environ, {"AECP_EXAMPLE_FAULT": fault}):
+                    manifest = self.run_adapter(factory)
+                self.assertEqual("FAIL", manifest["content"]["overall"])
+                divergences = {
+                    case["divergence"]
+                    for scenario in manifest["content"]["scenarios"]
+                    for case in scenario["cases"]
+                }
+                self.assertIn(expected, divergences)
 
     def test_subprocess_validates_complete_response_before_emitting(self):
         payload = json.dumps({

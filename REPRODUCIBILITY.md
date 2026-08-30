@@ -38,7 +38,12 @@ Do not call a simple `./verify.sh` run an independent implementation reproductio
 
 - **R0-run:** third party runs the bundled self-test;
 - **R1-port:** third party independently ports fixture semantics;
-- **R2-adapter:** third party connects its own adapter and publishes the exact manifest;
+- **R2-adapter:** third party connects its own adapter, publishes the exact manifest, and
+  separately demonstrates that the adapter is wired to the candidate's actuation path by
+  inducing `DENIED_BUT_FORMED` and `ALLOWED_BUT_NOT_FORMED` from faults injected inside the
+  candidate. An adapter whose emissions are derived from the decision does not qualify: it
+  can exercise qualification but cannot observe effect-path formation. See
+  `ADAPTER_CONTRACT.md`, Wrapping an external control;
 - **R3-counterexample:** third party produces an executable missing/alternate path.
 
 Strategic evidence should distinguish these levels explicitly.
