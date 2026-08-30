@@ -11,9 +11,10 @@
 - External revision: [`draft-schrock-action-evidence-boundary-04`](https://datatracker.ietf.org/doc/html/draft-schrock-action-evidence-boundary-04)
 - Reviewed local posted-text digest:
   `sha256:23d4daa5e436c4dc321c5e21e75f20965c6430c9807a3007e9c84762d33df63f`
-- AECP profile and release: portable exact-qualification profile,
-  `v0.1-rc2`
-- AECP source revision: `43832fa87213826036c6f0b0e4642c6084088565`
+- AECP profile: portable exact-qualification profile `0.1-rc2`
+- AECP repository baseline: `v0.1-rc2.1`
+- AECP source revision exercised:
+  `43832fa87213826036c6f0b0e4642c6084088565`
 - Mapping proposal and review: [issue #1](https://github.com/visker83-del/aecp/issues/1)
 - Substantive contributor: Iman Schrock, EMILIA Protocol, Inc.
 - Last validated: 2026-08-29 against the revisions above
