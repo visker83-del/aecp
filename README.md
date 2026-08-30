@@ -143,7 +143,18 @@ AECP-06 equivalent coordination-path reconstruction
 **Peer behavior is not authority.**  
 **Shared artifacts can create campaign continuity across agent runs.**
 
-C01 is a composition hypothesis, not a claim that AECP-04 currently simulates a multi-run campaign. One deterministic composed fixture is scheduled for v0.1.1.
+C01 is a composition hypothesis, not a claim that AECP-04 currently simulates a multi-run campaign. It remains a deferred design input; no composed fixture is scheduled in v0.1.
+
+## Non-normative interoperability mappings
+
+`docs/interop/` holds version-pinned notes describing how an external mechanism's stated
+boundary can be expressed against this profile. They add no scenario and carry no
+endorsement, certification, or adoption.
+
+- [`aeb-04.md`](docs/interop/aeb-04.md) — selected Action Evidence Boundary questions
+  mapped into the current portable profile. Substantive contribution by Iman Schrock in
+  [PR #2](https://github.com/visker83-del/aecp/pull/2). This is not AEB conformance, not
+  an AEB implementation result, and not an external adapter result.
 
 ## Exact-qualification profile boundary
 
