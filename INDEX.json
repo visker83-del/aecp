@@ -67,9 +67,9 @@
       "sha256": "48c0b1427a5b1fb426ed8bc5f3c90c2d94fe08ed9fbdeb3b5f1a028997cd1fdc"
     },
     {
-      "bytes": 2865,
+      "bytes": 8247,
       "path": "INCIDENT_MAPPING.md",
-      "sha256": "8e5cb95ca505e060fde7b838f36c36a160e15192a74e16fc9e0ecb412e99c03d"
+      "sha256": "87667eed12c7f7a34763e7b97ac077b3fe2e970655f4c962fe799146bb342fd9"
     },
     {
       "bytes": 1523,
@@ -122,9 +122,9 @@
       "sha256": "f49af2ec7c3c7721ed113b5de4253f5ae345e21a5c2f1028cb3c449e438e46e1"
     },
     {
-      "bytes": 4196,
+      "bytes": 5623,
       "path": "SOURCES.md",
-      "sha256": "d11d28ae0400b9395ad16843408d2ac16707beb6fff70f900e95a4f3c3ea08ce"
+      "sha256": "709af7a7a9cab8cc582153bdb08d2be39ea59226148510584dbca948cfdc8adb"
     },
     {
       "bytes": 1296,

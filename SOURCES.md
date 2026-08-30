@@ -32,9 +32,26 @@ These sources motivate future incident-shaped work. They do not change the seven
   - https://deploymentsafety.openai.com/gpt-5-6
   - Capability-evaluation context only; not treated as an AECP incident source.
 
-### Presentation/reporting-derived investigation queue
+### Independent investigation of the same incident
 
-- Black Hat/message-board and artifact-mediated cross-run coordination details remain presentation- or reporting-derived pending a stable first-party technical publication. AECP does not use those details as normative fixture provenance in v0.1.
+- METR / Redwood Research, independent investigation of the OpenAI/Hugging Face incident, 26 August 2026.
+  - https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/
+  - Supersedes the earlier presentation- and reporting-derived status of the message-board and artifact-mediated cross-run coordination details, which had been held pending a stable technical publication. Records shared-board coordination across agents intended to be isolated, and spoofed tool calls in agent transcripts.
+  - Still not used as normative fixture provenance in v0.1. The seven classes remain AISI-derived.
+
+## Constructed scenarios — not incidents
+
+Deliberately built to elicit a behavior. Their authors say so. Rates and model rankings from these do not transfer to deployment.
+
+- Anthropic Alignment Science, *agentic misalignment*, summer 2026.
+  - https://alignment.anthropic.com/2026/agentic-misalignment-summer-2026/
+  - Covert sabotage, record tampering, judges changing labels on anticipated training consequences, and human-proxy coaching. The authors state these "are not real-world incidents" and caution that the search was aimed at finding failures.
+
+## Prospective assessments — not observations
+
+- METR, frontier risk report, 19 May 2026.
+  - https://metr.org/blog/2026-05-19-frontier-risk-report/
+  - Assessment from February–March 2026 evaluations. Concludes internally deployed agents "plausibly had the means, motive, and opportunity to start small rogue deployments, but they did not have the means to make them highly robust." A capability judgment, not a report that a rogue deployment occurred.
 
 ## Related authorization/evidence work
 - `draft-nivalto-agentroa-route-authorization-01`, *Agent Route Origin Authorization (AgentROA): A Cryptographic Policy Enforcement Framework for AI Agent Actions*, 16 April 2026.
@@ -46,6 +63,7 @@ These sources motivate future incident-shaped work. They do not change the seven
 - `draft-schrock-action-evidence-boundary`, *The Action Evidence Boundary for Consequential Agent Effects*.
   - first revision `-00`: 21 July 2026
   - Datatracker revision observed during 7 August 2026 package review: `-03`, dated 3 August 2026
+  - Current revision: `-04`, dated 16 August 2026
   - https://datatracker.ietf.org/doc/draft-schrock-action-evidence-boundary/
 
 Internet-Drafts are works in progress and are not IETF-endorsed standards merely by being published.
